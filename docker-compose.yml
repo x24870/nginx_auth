@@ -16,6 +16,9 @@ services:
     image: 'auth_server'
     network_mode: 'host'
     restart: 'always'
+    environment:
+      PORT: 8080
+      TOKEN: 'jigentec'
     logging:
       options:
         max-size: '10m'

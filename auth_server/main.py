@@ -3,7 +3,7 @@ from flask import request
 from flask import Response
 from flask import abort
 
-SECRET = 'jigentec'
+from config import conf
 
 app = Flask(__name__)
 
@@ -13,10 +13,10 @@ def hello_world():
 
 @app.route('/auth')
 def auth():
-    if request.headers.get('secret') and request.headers['secret'] == SECRET:
+    if request.headers.get('token') and request.headers['token'] == conf.token:
         resp = Response(response='authenticated', status=200)
     else:
-        return abort(401, "auth_server: not correct secret")
+        return abort(401, "auth_server: invalid token")
     return resp
 
 @app.route('/private')
@@ -25,4 +25,4 @@ def private():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0', port=8080)
+    app.run(debug=True, host='0.0.0.0', port=conf.port)
