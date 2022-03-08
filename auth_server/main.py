@@ -4,8 +4,12 @@ from flask import Response
 from flask import abort
 
 from config import conf
+from middleware import middleware
 
 app = Flask(__name__)
+
+# middleware
+app.wsgi_app = middleware(app=app.wsgi_app)
 
 @app.route('/')
 def hello_world():
